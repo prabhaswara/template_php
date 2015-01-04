@@ -40,14 +40,16 @@ $(function () {
 
 function editUser(recid) {
     $().w2popup('open', {
+        name    : 'lookup_form',
         title   : (recid == 0 ? 'Add User' : 'Edit User'),
-        body    : '<div id="lookup_form" style="width: 100%; height: 100%">please wait..</div>',
+        body    : '<div id="lookup_form" class="framepopup">please wait..</div>',
         style   : 'padding: 15px 0px 0px 0px',
         width   : 500,
         height  : 300, 
         onOpen  : function (event) {
             event.onComplete = function () {
-               $( "#lookup_form" ).load( "{site_url}/admin/lookup/showForm", function() {});
+                
+               $( "#lookup_form" ).load( "{site_url}/admin/lookup/showForm/"+recid, function() {});
             }
            
         }

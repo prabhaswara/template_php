@@ -5,12 +5,11 @@ class Main_Controller extends CI_Controller {
     public $template = "main";
 
     function __construct() {
-
         parent::__construct();
+        $this->load->helper('gn_frm','gn_str');
     }
 
     function loadview($content, $dataContent = array()) {
-
        
         $dataContent['site_url'] = site_url();
         $dataContent['base_url'] = base_url();

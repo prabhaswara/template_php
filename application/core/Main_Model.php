@@ -5,6 +5,7 @@ class Main_Model extends CI_Model {
     function __construct() {
 
         parent::__construct();
+        $this->load->helper('gn_str');
     }
 
     function w2grid($sql, $request,$cql="") {
