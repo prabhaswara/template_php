@@ -16,10 +16,10 @@ $(function () {
             toolbarDelete : true
         },
         columns: [
-            { field: 'value', caption: 'Value', size: '150px', searchable: true },
-            { field: 'name', caption: 'Name', size: '150px', searchable: true },
-            { field: 'type', caption: 'Type', size: '100%', searchable: true },
-            { field: 'datecreate', caption: 'Date Create', size: '150px', searchable: false }
+            { field: 'value', caption: 'Value', size: '150px', searchable: true,sortable: true  },
+            { field: 'name', caption: 'Name', size: '150px', searchable: true,sortable: true  },
+            { field: 'type', caption: 'Type', size: '100%', searchable: true,sortable: true  },
+            { field: 'datecreate', caption: 'Date Create', size: '150px', searchable: false,sortable: true  }
         ],
         onAdd: function (event) {
             editUser(0);

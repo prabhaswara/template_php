@@ -2,7 +2,7 @@
 
 class Main_Controller extends CI_Controller {
 
-    public $template = "main";
+    public $template = "w2layout";
 
     function __construct() {
         parent::__construct();

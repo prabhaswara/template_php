@@ -8,7 +8,7 @@ class Lookup extends Main_Controller {
     }
 
     public function json_list() {
-        $data = $this->m_lookup->w2grid("SELECT * FROM lookup WHERE ~search~ ORDER BY ~sort~", $_POST);
+        $data = $this->m_lookup->w2grid("SELECT * FROM tpl_lookup WHERE ~search~ ORDER BY ~sort~", $_POST);
         header("Content-Type: application/json;charset=utf-8");
         echo json_encode($data);
     }
@@ -16,7 +16,8 @@ class Lookup extends Main_Controller {
     public function index() {
         $dataParse=array();
         
-        $this->loadview('lookup/list', $dataParse);
+        $this->parser->parse('lookup/list', $dataParse);
+     
     }
     public function showForm($id) {
         
@@ -39,8 +40,8 @@ class Lookup extends Main_Controller {
             }
             
         }
-        
-        $this->loadview('lookup/form', $dataParse);
+        $this->parser->parse('lookup/form', $dataParse);
+       
     }
     
     
