@@ -15,9 +15,15 @@
             </td>        
         </tr>
         <tr>
-            <td>Name</td>
+            <td>Display Text</td>
             <td>
-                <?= frm_('name', $post) ?>
+                <?= frm_('display_text', $post) ?>
+            </td>
+        </tr>
+        <tr>
+            <td>Ordering Number</td>
+            <td>
+                <?= frm_('order_num', $post) ?>
             </td>
         </tr>
     </table>

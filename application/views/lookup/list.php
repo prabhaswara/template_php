@@ -16,13 +16,14 @@ $(function () {
             toolbarDelete : true
         },
         columns: [
+            { field: 'type', caption: 'Type', size: '150px', searchable: true,sortable: true  },
             { field: 'value', caption: 'Value', size: '150px', searchable: true,sortable: true  },
-            { field: 'name', caption: 'Name', size: '150px', searchable: true,sortable: true  },
-            { field: 'type', caption: 'Type', size: '100%', searchable: true,sortable: true  },
-            { field: 'datecreate', caption: 'Date Create', size: '150px', searchable: false,sortable: true  }
+            { field: 'display_text', caption: 'Name', size: '100%', searchable: true,sortable: true  },
+            { field: 'order_num', caption: 'Ordering number', size: '150px', searchable: true,sortable: true  }
+        
         ],
         onAdd: function (event) {
-            editUser(0);
+            editLookup(0);
         },
         onDelete: function (event) {          
             w2ui['listLookup'].url = '{site_url}/admin/lookup/delete';
@@ -31,17 +32,17 @@ $(function () {
          w2ui['listLookup'].url = '{site_url}/admin/lookup/json_list';
         },
         onDblClick: function (event) {
-            editUser(event.recid);
+            editLookup(event.recid);
         }
     });
 
     
 });
 
-function editUser(recid) {
+function editLookup(recid) {
     $().w2popup('open', {
         name    : 'lookup_form',
-        title   : (recid == 0 ? 'Add User' : 'Edit User'),
+        title   : (recid == 0 ? 'Add Lookup' : 'Edit Lookup'),
         body    : '<div id="lookup_form" class="framepopup">please wait..</div>',
         style   : 'padding: 15px 0px 0px 0px',
         width   : 500,

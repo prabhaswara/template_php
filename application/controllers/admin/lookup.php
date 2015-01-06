@@ -15,20 +15,17 @@ class Lookup extends Main_Controller {
 
     public function index() {
         $dataParse=array();
-        
-        $this->parser->parse('lookup/list', $dataParse);
+        $this->template="main";  
+        $this->loadview('lookup/list', $dataParse);
      
     }
-    public function showForm($id) {
+    public function showForm($id=0) {
         
         $postform=isset($_POST['frm'])?$_POST['frm']:array();
-        
-        if($id!="0"&& empty($postform)){
-            $postform=$this->m_lookup->get($id);
-        }
-        $dataParse=array('post'=>$postform);
-        
-        $dataParse["message"]="";
+        $message="";
+       
+              
+       
         if(!empty($postform)){
             $validate=$this->m_lookup->validate($postform);
             if($validate["status"] && $this->m_lookup->saveOrUpdate($postform)){
@@ -36,10 +33,20 @@ class Lookup extends Main_Controller {
             }
             $error_message= isset($validate["message"])?$validate["message"]:array();
             if(!empty($error_message)){
-                $dataParse["message"]=  showMessage($error_message);
+                $message=  showMessage($error_message);
             }
             
+        }elseif($id!="0"&& empty($postform)){
+            
+            $postform=$this->m_lookup->get($id);
+        
         }
+        $dataParse=array(
+            'post'=>$postform,
+            'message'=>$message,
+            'base_url'=>  base_url(),
+            'site_url'=> site_url()
+            );
         $this->parser->parse('lookup/form', $dataParse);
        
     }

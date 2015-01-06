@@ -3,7 +3,8 @@
 class home extends Main_Controller {
 
     public function __construct() {
-        parent::__construct();       
+        parent::__construct();
+        $this->load->model('m_menu');
     }
 
     public function index() {
@@ -11,7 +12,7 @@ class home extends Main_Controller {
         $this->loadview('home', $dataParse);
     }
     public function sidebar(){
-        
+        $this->m_menu->generateMenu();
     }
     
     
