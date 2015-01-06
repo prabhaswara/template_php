@@ -12,7 +12,12 @@ class home extends Main_Controller {
         $this->loadview('home', $dataParse);
     }
     public function sidebar(){
-        $this->m_menu->generateMenu();
+        $data=$this->m_menu->generateMenu();
+        
+        $arrayMenu=$this->m_menu->tow2uimenu($data);
+        
+        echo json_encode($data,4);
+         print_r($arrayMenu);
     }
     
     

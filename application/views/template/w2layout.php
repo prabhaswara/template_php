@@ -31,6 +31,23 @@
                       
                     ]
                 });
+                
+                // then define the sidebar
+w2ui['layout'].content('left', $().w2sidebar({
+	name: 'sidebar',
+	img: null,
+	nodes: [ 
+		{ id: 'level-1', text: 'Level 1', img: 'icon-folder', expanded: true, group: false,
+		  nodes: [ { id: 'level-1-1', text: 'Level 1.1', icon: 'fa-home' },
+				   { id: 'level-1-2', text: 'Level 1.2', icon: 'fa-star' },
+				   { id: 'level-1-3', text: 'Level 1.3', icon: 'fa-check' }
+				 ]
+		}
+	],
+	onClick: function (event) {
+		w2ui['layout'].content('main', 'id: ' + event.target);
+	}
+}));
             });
             
             function setLayoutContainerHeight()
