@@ -17,12 +17,12 @@ $(function () {
             toolbarDelete : true
         },
         columns: [
-            { field: 'pp.parent', caption: 'Type', size: '150px', searchable: true,sortable: true  },
-            { field: 'mn.menu_title', caption: 'Value', size: '150px', searchable: true,sortable: true  },
-            { field: 'mn.url', caption: 'Name', size: '100%', searchable: true,sortable: true  },
-            { field: 'mn.attributes', caption: 'Ordering number', size: '150px', searchable: true,sortable: true  },
-            { field: 'lk.active_non_v', caption: 'Ordering number', size: '150px', searchable: true,sortable: true  },
-            { field: 'mn.order_num', caption: 'Ordering number', size: '150px', searchable: true,sortable: true  }
+            { field: 'pp_sp_menu_title', caption: 'Parent', size: '150px', searchable: true,sortable: true  },
+            { field: 'mn_sp_menu_title', caption: 'Menu Title', size: '150px', searchable: true,sortable: true  },
+            { field: 'mn_sp_url', caption: 'Url', size: '100%', searchable: true,sortable: true  },
+            { field: 'mn_sp_attributes', caption: 'attributes', size: '150px', searchable: true,sortable: true  },
+            { field: 'lk_sp_display_text', caption: 'Active/Non Active', size: '150px', searchable: true,sortable: true  },
+            { field: 'mn_sp_order_num', caption: 'Ordering number', size: '150px', searchable: true,sortable: true  }
             
         ],
         onAdd: function (event) {
