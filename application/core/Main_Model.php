@@ -73,13 +73,19 @@ class Main_Model extends CI_Model {
         if ($str2 == "") $str2 = "1=1";
 
         // build sql
-        $sql = str_ireplace("~search~", $str, $sql);
-        $sql = str_ireplace("~order~", "~sort~", $sql);
+        $sql = str_ireplace("~search~", $str, $sql);       
         $sql = str_ireplace("~sort~", $str2, $sql);
 
         // build cql (for counging)
         if ($cql == null || $cql == "") {
             $cql = "SELECT count(1) rows FROM ($sql) as grid_list_1";
+        }else{
+            if(strpos($cql, "~search~")){
+                $cql = str_ireplace("~search~", $str, $cql);    
+                $cql = str_ireplace("~sort~", $str2, $cql);
+                $cql = "SELECT count(1) rows FROM ($cql) as grid_list_1";
+            }
+           
         }
         if (!isset($request['limit']))  $request['limit']  = 50;
         if (!isset($request['offset'])) $request['offset'] = 0;

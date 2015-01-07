@@ -1,11 +1,15 @@
  
-<div id="listLookup" style="width: 100%; height: 600px;"></div>
+<div id="listLookup" style="position: absolute;top:0;bottom: 10px;right: 0px;left: 0px"></div>
 
  <script>
 $(function () {
     // define and render grid
+    gridName='listLookup';
+//    if (typeof w2ui[gridName] !== 'undefined') {
+//        $().w2destroy(gridName);
+//    }
     $('#listLookup').w2grid({
-        name    : 'listLookup',
+        name    : gridName,
         url     : '{site_url}/admin/lookup/json_list',
         header  : 'List of lookup',
         show: {

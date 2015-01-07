@@ -1,6 +1,6 @@
 {message}
 <form method="POST" id="formnya">
-    <?= frm_('lookup_id', $post, "hidden") ?>
+    <?= frm_('menu_id', $post, "hidden") ?>
     <table>
         <tr>
             <td>Type</td>
@@ -34,7 +34,7 @@
 <script>
     $(function () {
         $("#action").click(function () {
-            $("#formnya").gn_popup_submit("{site_url}/admin/lookup/showForm","lookup_form",w2ui['listLookup']);
+            $("#formnya").gn_popup_submit("{site_url}/admin/menu/showForm","menu_form",w2ui['listLookup']);
             return false;
         });
     });

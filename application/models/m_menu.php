@@ -8,13 +8,75 @@ class M_menu extends Main_Model {
     function __construct() {
         parent::__construct();
     }
+    function get($id){
+        return $this->db->where("menu_id",$id)->get("tpl_menu")->row_array();
+    }
+    
+    public function saveOrUpdate($datafrm) {
+        $return=false;
+        $menu_id = $datafrm["menu_id"];
+        unset($datafrm["menu_id"]);
+        
+        $this->db->set('dateupdate', 'NOW()', FALSE); 
+        if ($menu_id == "") {      
+            $this->db->set('datecreate', 'NOW()', FALSE);             
+            $return=$this->db->insert('tpl_menu', $datafrm);
+        } else {        
+            $return=$this->db->update('tpl_menu', $datafrm, array('menu_id' => $menu_id));
+        }
+        return $return;
+    }
+    
+    public function delete($selected){
+        foreach($selected as $id){
+            $this->db->delete( 'tpl_menu', array( 'menu_id' => $id ) );
+        }
+    }
+
+    public function validate($datafrm) {
+        $return = array(
+            'status' => true,
+            'message' => array()
+        );
+
+        if (!empty($datafrm)) {
+
+            if (cleanstr($datafrm["menu_title"]) == "") {
+                $return["status"] = false;
+                $return["message"]["menu_title"] = "Menu Title cannot be empty";
+            }
+
+            if (cleanstr($datafrm["url"]) == "") {
+                $return["status"] = false;
+                $return["message"]["url"] = "Url cannot be empty";
+            }
+
+          
+        }
+
+        return $return;
+    }
     
     function strArrayMenuw2ui($arrayMenu){
        
         $string="[";
         foreach($arrayMenu as $key=>$val){
-            $string.="id='".$val[""]."',text='".$val[""]."'";
+            
+            $punyaAnak=isset($val['child'])&& !empty($val['child']);
+            $punyaImg=strpos($val["attributes"],"img");
+            
+            if($punyaAnak && !$punyaImg){
+                $val["attributes"].=" , img: 'icon-folder'";
+            }
+          
+            $string.="{id:'".$val["menu_id"]."', text:'".$val["menu_title"]."' ".$val["attributes"];
+            if($punyaAnak){
+                $string.=", nodes:".$this->strArrayMenuw2ui($val['child']);
+                $string=  substr($string, 0,  strlen($string)-1);
+            }    
+            $string.=" },";
         }
+        $string=  substr($string, 0,  strlen($string)-1);
         $string.="],";
         return $string;
         
