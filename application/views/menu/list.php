@@ -21,8 +21,8 @@ $(function () {
             { field: 'mn_sp_menu_title', caption: 'Menu Title', size: '150px', searchable: true,sortable: true  },
             { field: 'mn_sp_url', caption: 'Url', size: '100%', searchable: true,sortable: true  },
             { field: 'mn_sp_attributes', caption: 'attributes', size: '150px', searchable: true,sortable: true  },
-            { field: 'lk_sp_display_text', caption: 'Active/Non Active', size: '150px', searchable: true,sortable: true  },
-            { field: 'mn_sp_order_num', caption: 'Ordering number', size: '150px', searchable: true,sortable: true  }
+            { field: 'lk_sp_display_text', caption: 'Active/Non', size: '100px', searchable: true,sortable: true  },
+            { field: 'mn_sp_order_num', caption: 'Ordering Num', size: '100px', searchable: true,sortable: true  }
             
         ],
         onAdd: function (event) {

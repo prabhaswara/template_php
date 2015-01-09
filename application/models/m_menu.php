@@ -12,6 +12,15 @@ class M_menu extends Main_Model {
         return $this->db->where("menu_id",$id)->get("tpl_menu")->row_array();
     }
     
+    function comboParent(){
+        $data= $this->db->select("menu_id,menu_title")->get("tpl_menu")->result_array();
+        $return=array();
+        foreach($data as $row){
+            $return[$row["menu_id"]]=$row["menu_title"];
+        }
+        return $return;
+    }
+    
     public function saveOrUpdate($datafrm) {
         $return=false;
         $menu_id = $datafrm["menu_id"];

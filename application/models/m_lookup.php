@@ -11,6 +11,15 @@ class M_lookup extends Main_Model {
     function get($id){
         return $this->db->where("lookup_id",$id)->get("tpl_lookup")->row_array();
     }
+    
+    function comboLookup($type){
+        $data=$this->db->where("type",$type)->order_by("order_num")->get("tpl_lookup")->result_array();
+        $return=array();
+        foreach($data as $row){
+            $return[$row["value"]]=$row["display_text"];
+        }
+        return $return;
+    }
 
     public function saveOrUpdate($datafrm) {
         $return=false;

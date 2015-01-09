@@ -3,27 +3,39 @@
     <?= frm_('menu_id', $post, "hidden") ?>
     <table>
         <tr>
-            <td>Type</td>
+            <td>Parent</td>
             <td>
-                <?= frm_('type', $post) ?>
+                <?= select_('active_non', $post,$parentList) ?>
             </td>
         </tr>
         <tr>
-            <td>Value</td>
+            <td>Menu Title</td>
             <td>
-                <?= frm_('value', $post) ?>
+                <?= frm_('menu_title', $post) ?>
             </td>        
         </tr>
         <tr>
-            <td>Display Text</td>
+            <td>Url</td>
             <td>
-                <?= frm_('display_text', $post) ?>
+                <?= frm_('url', $post) ?>
             </td>
         </tr>
         <tr>
-            <td>Ordering Number</td>
+            <td>Attributes</td>
+            <td>
+                <?= frm_('attributes', $post) ?>
+            </td>
+        </tr>
+        <tr>
+            <td>Ordering number</td>
             <td>
                 <?= frm_('order_num', $post) ?>
+            </td>
+        </tr>
+        <tr>
+            <td>Active\non</td>
+            <td>
+                <?= select_('active_non', $post,$activeNonList,'',false) ?>
             </td>
         </tr>
     </table>

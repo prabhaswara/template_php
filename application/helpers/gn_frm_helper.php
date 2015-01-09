@@ -74,7 +74,8 @@ if (!function_exists('textarea_')) {
 }
 if (!function_exists('select_')) {
 
-    function select_($name = '', $dataForm = array(), $option = array(), $extra = '', $pilih = true) {
+    function select_($name = '', $dataForm = array(), $options = array(), $extra = '', $pilih = true) {
+   
         $type = "type='text'";
         if (strpos(strtolower($extra), "type")) {
             $type = "";
@@ -84,7 +85,7 @@ if (!function_exists('select_')) {
         if (isset($dataForm[$name])) {
             $value = $dataForm[$name];
         }
-
+       
 
         $return = "<select name='frm[$name]' id='$name' $extra >";
         if ($pilih)
@@ -92,7 +93,8 @@ if (!function_exists('select_')) {
 
         if (!empty($options))
             foreach ($options as $optVal => $optName) {
-                $selected = ($optVal == $value) ? "selected='selected'" : "";
+           
+                $selected = ($optVal === $value) ? "selected='selected'" : "";
                 $return.=
                         "<option value='$optVal' $selected >$optName</option>";
             }

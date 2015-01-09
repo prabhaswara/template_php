@@ -4,15 +4,16 @@ class Menu extends Main_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('m_menu');
+        $this->load->model(array('m_menu','m_lookup'));
     }
 
     public function json_list() {
         
         if(isset($_POST["sort"])&& !empty($_POST["sort"]))
-        foreach($_POST["sort"] as $key=>$value){
-            $_POST["sort"][$key]=  str_replace("_sp_", ".", $value);
-        }
+            foreach($_POST["sort"] as $key=>$value){
+                $_POST["sort"][$key]=  str_replace("_sp_", ".", $value);
+            }
+        
         
         if(isset($_POST["search"])&& !empty($_POST["search"]))
         foreach($_POST["search"] as $key=>$value){
@@ -21,7 +22,7 @@ class Menu extends Main_Controller {
         
         $sql="SELECT * FROM tpl_menu mn left join tpl_menu pp on mn.parent_id=pp.menu_id left join tpl_lookup lk on lk.value=mn.active_non and lk.type='active_non '   WHERE ~search~ ORDER BY ~sort~";
         $data = $this->m_menu->w2grid(
-        str_replace("*", "pp.menu_title pp_sp_menu_title,mn.menu_title mn_sp_menu_title,mn.url mn_sp_url,mn.attributes mn_sp_attributes,lk.display_text lk_sp_display_text", $sql), 
+        str_replace("*", "pp.menu_title pp_sp_menu_title,mn.menu_title mn_sp_menu_title,mn.url mn_sp_url,mn.attributes mn_sp_attributes,lk.display_text lk_sp_display_text,mn.order_num mn_sp_order_num", $sql), 
         $_POST,
         str_replace("*","mn.parent_id" , $sql));
         header("Content-Type: application/json;charset=utf-8");
@@ -38,8 +39,7 @@ class Menu extends Main_Controller {
         
         $postform=isset($_POST['frm'])?$_POST['frm']:array();
         $message="";
-       
-              
+                    
        
         if(!empty($postform)){
             $validate=$this->m_menu->validate($postform);
@@ -56,7 +56,18 @@ class Menu extends Main_Controller {
             $postform=$this->m_menu->get($id);
         
         }
+        
+        
+        
+        $parentList=$this->m_menu->comboParent();
+        array_unshift(array("0"=>"Rooot"),$parentList);
+        
+        $activeNonList=$this->m_lookup->comboLookup("active_non");
+        
+        
         $dataParse=array(
+            'parentList'=>$parentList,
+            'activeNonList'=>$activeNonList,
             'post'=>$postform,
             'message'=>$message,
             'base_url'=>  base_url(),
