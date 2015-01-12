@@ -55,14 +55,14 @@ class M_menu extends Main_Model {
                 $return["message"]["menu_title"] = "Menu Title cannot be empty";
             }
 
-            if (cleanstr($datafrm["url"]) == "") {
-                $return["status"] = false;
-                $return["message"]["url"] = "Url cannot be empty";
-            }
+//            if (cleanstr($datafrm["url"]) == "") {
+//                $return["status"] = false;
+//                $return["message"]["url"] = "Url cannot be empty";
+//            }
 
           
         }
-
+     
         return $return;
     }
     

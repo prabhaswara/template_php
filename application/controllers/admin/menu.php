@@ -22,25 +22,21 @@ class Menu extends Main_Controller {
         
         $sql="SELECT * FROM tpl_menu mn left join tpl_menu pp on mn.parent_id=pp.menu_id left join tpl_lookup lk on lk.value=mn.active_non and lk.type='active_non '   WHERE ~search~ ORDER BY ~sort~";
         $data = $this->m_menu->w2grid(
-        str_replace("*", "pp.menu_title pp_sp_menu_title,mn.menu_title mn_sp_menu_title,mn.url mn_sp_url,mn.attributes mn_sp_attributes,lk.display_text lk_sp_display_text,mn.order_num mn_sp_order_num", $sql), 
+        str_replace("*", "mn.menu_id mn_menu_id,pp.menu_title pp_sp_menu_title,mn.menu_title mn_sp_menu_title,mn.url mn_sp_url,mn.attributes mn_sp_attributes,lk.display_text lk_sp_display_text,mn.order_num mn_sp_order_num", $sql), 
         $_POST,
         str_replace("*","mn.parent_id" , $sql));
         header("Content-Type: application/json;charset=utf-8");
         echo json_encode($data);
     }
 
-    public function index() {
+    public function index() {      
        
-       
-        $this->loadContent('menu/list');
-     
+        $this->loadContent('menu/list');     
     }
     public function showForm($id=0) {
         
         $postform=isset($_POST['frm'])?$_POST['frm']:array();
         $message="";
-                    
-       
         if(!empty($postform)){
             $validate=$this->m_menu->validate($postform);
             if($validate["status"] && $this->m_menu->saveOrUpdate($postform)){
@@ -49,22 +45,15 @@ class Menu extends Main_Controller {
             $error_message= isset($validate["message"])?$validate["message"]:array();
             if(!empty($error_message)){
                 $message=  showMessage($error_message);
-            }
+            }            
+        }elseif($id!="0"&& empty($postform)){            
+            $postform=$this->m_menu->get($id);        
             
-        }elseif($id!="0"&& empty($postform)){
-            
-            $postform=$this->m_menu->get($id);
-        
         }
-        
-        
-        
         $parentList=$this->m_menu->comboParent();
-        array_unshift(array("0"=>"Rooot"),$parentList);
-        
+        $parentList=array_merge(array("0"=>"Root"),$parentList);        
         $activeNonList=$this->m_lookup->comboLookup("active_non");
-        
-        
+                
         $dataParse=array(
             'parentList'=>$parentList,
             'activeNonList'=>$activeNonList,
@@ -76,7 +65,6 @@ class Menu extends Main_Controller {
         $this->parser->parse('menu/form', $dataParse);
        
     }
-    
     
     public function delete() {
         if(isset($_POST["selected"]))

@@ -18,7 +18,7 @@ if (!function_exists('showMessage')) {
 
             if (is_array($messages) && count($messages) == 1) {
 
-                $print_msg = $messages[0];
+                $print_msg = current($messages);
             }
 
             if ($print_msg != "" && !empty($print_msg)) {
@@ -85,7 +85,7 @@ if (!function_exists('select_')) {
         if (isset($dataForm[$name])) {
             $value = $dataForm[$name];
         }
-       
+     
 
         $return = "<select name='frm[$name]' id='$name' $extra >";
         if ($pilih)
@@ -93,8 +93,8 @@ if (!function_exists('select_')) {
 
         if (!empty($options))
             foreach ($options as $optVal => $optName) {
-           
-                $selected = ($optVal === $value) ? "selected='selected'" : "";
+            
+                $selected = (trim($optVal) === trim($value)) ? "selected='selected'" : "";
                 $return.=
                         "<option value='$optVal' $selected >$optName</option>";
             }

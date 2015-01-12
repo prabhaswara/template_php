@@ -5,13 +5,13 @@
         <tr>
             <td>Parent</td>
             <td>
-                <?= select_('active_non', $post,$parentList) ?>
+                <?= select_('parent_id', $post,$parentList,"class='required'",false) ?>
             </td>
         </tr>
         <tr>
             <td>Menu Title</td>
             <td>
-                <?= frm_('menu_title', $post) ?>
+                <?= frm_('menu_title', $post,"class='required'") ?>
             </td>        
         </tr>
         <tr>
@@ -45,8 +45,10 @@
 
 <script>
     $(function () {
+        $(this).init_js("{base_url}");
+        
         $("#action").click(function () {
-            $("#formnya").gn_popup_submit("{site_url}/admin/menu/showForm","menu_form",w2ui['listLookup']);
+            $("#formnya").gn_popup_submit("{site_url}/admin/menu/showForm","menu_form",w2ui['listMenu']);
             return false;
         });
     });

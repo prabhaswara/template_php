@@ -1,6 +1,9 @@
 (function($) {
 
-
+    $.fn.init_js=function (url){
+       $(".required").after("<img class='required-star'  src='"+url+"images/star_red.png' />");  
+       
+    };
     $.fn.gn_popup_submit = function(url, content_id, grid) {
         $.ajax({
             type: "POST",

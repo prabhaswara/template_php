@@ -1,4 +1,8 @@
 .framepopup{
-   
+
     margin: 5px 10px 10px 10px;
+}
+
+.required-star  {
+    margin:0px;padding: 0px;vertical-align: top
 }
