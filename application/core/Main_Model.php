@@ -8,6 +8,20 @@ class Main_Model extends CI_Model {
         $this->load->helper('gn_str');
     }
 
+    function generateID($field,$table){
+        $id=$this->uniqID();
+        $this->db;
+
+        $row=$this->db->where($field,$id)->get($table)->row_array();
+        while (!empty($row)){
+            $row=$this->db->where($field,$id)->get($table)->row_array();
+            $id=$this->uniqID();
+        }
+        return $id;
+    }
+    function uniqID(){
+        return uniqid(time());   
+    }
     function w2grid($sql, $request,$cql="") {
         $db = $this->db;
         // prepare search

@@ -12,14 +12,11 @@ class M_role extends Main_Model {
         return $this->db->where("role_id",$id)->get("tpl_role")->row_array();
     }
     
-    function comboRole($type){
-        $data=$this->db->where("type",$type)->order_by("order_num")->get("tpl_role")->result_array();
-        $return=array();
-        foreach($data as $row){
-            $return[$row["value"]]=$row["display_text"];
-        }
-        return $return;
+    function allrole(){
+        return $this->db->select("role_id,name")->get("tpl_role")->result_array();
     }
+    
+  
 
     public function saveOrUpdate($datafrm) {
         $return=false;

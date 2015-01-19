@@ -1,5 +1,5 @@
- 
-<div id="listMenu" style="position: absolute;top:0;bottom: 10px;right: 0px;left: 0px"></div>
+
+<div id="listMenu" class="tablegrid_stylefull"></div>
 
  <script>
 $(function () {

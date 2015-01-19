@@ -1,5 +1,5 @@
- 
-<div id="listRole" style="position: absolute;top:0;bottom: 10px;right: 0px;left: 0px"></div>
+
+<div id="listRole" class="tablegrid_stylefull"></div>
 
  <script>
 $(function () {
