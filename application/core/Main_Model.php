@@ -19,6 +19,9 @@ class Main_Model extends CI_Model {
         }
         return $id;
     }
+    function encrypt($string){
+        return md5($string);
+    }
     function uniqID(){
         return uniqid(time());   
     }

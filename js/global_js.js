@@ -40,6 +40,14 @@
               
                 w2ui['main_layout'].content('main', data);
                 loadingShow(false);
+            },          
+            statusCode :{
+                 500: function() {
+                    loadingShow(false);
+                },
+                404: function() {
+                    loadingShow(false);
+                }
             }
         });
        
@@ -63,7 +71,16 @@
             {
                 w2ui['main_layout'].content('main', data);
                 loadingShow(false);
+            },
+            statusCode :{
+                 500: function() {
+                    loadingShow(false);
+                },
+                404: function() {
+                    loadingShow(false);
+                }
             }
+            
         });
     };
 

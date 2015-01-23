@@ -20,9 +20,10 @@ $(function () {
             toolbarDelete : true
         },
         columns: [
-            { field: 'user_id', caption: 'User Id', size: '150px', searchable: true,sortable: true  },
-            { field: 'username', caption: 'Username', size: '100%', searchable: true,sortable: true  },
-            { field: 'last_login', caption: 'Last Login', size: '150px', searchable: true,sortable: false  },
+            { field: 'us_sp_username', caption: 'Username', size: '100px', searchable: true,sortable: true  },
+            { field: 'lk_sp_display_text', caption: 'Active/Non', size: '100px', searchable: true,sortable: true  },
+            { field: 'us_sp_last_login', caption: 'Last Login', size: '150px', searchable: false,sortable: false  },
+            { field: 'rl_sp_role_name', caption: 'Role', size: '100%', searchable: false,sortable: false  },
             
         ],
         onAdd: function (event) {

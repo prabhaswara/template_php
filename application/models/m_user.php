@@ -5,6 +5,9 @@ if (!defined('BASEPATH'))
 
 class M_user extends Main_Model {
 
+    var $error_message="";
+    
+    
     function __construct() {
         parent::__construct();
     }
@@ -12,24 +15,53 @@ class M_user extends Main_Model {
         return $this->db->where("user_id",$id)->get("tpl_user")->row_array();
     }
     
+    function getRoleUser($id){
+        $roles= $this->db->select("role_id")->where("user_id",$id)->get("tpl_user_role")->result_array();
+    
+        $return=array();
+        if(!empty($roles))
+        foreach($roles as $role){
+            $return[]=$role["role_id"];
+        }
+        return $return;
+        
+    }
+    
     function getByUsername($username){
         return $this->db->where("username",$username)->get("tpl_user")->row_array();
     }
     
     
-    public function saveOrUpdate($datafrm) {
-        $return=false;
-        $user_id = $datafrm["user_id"];
-        unset($datafrm["user_id"]);
+    public function saveOrUpdate($dataSave) {
+        $this->db->trans_start(TRUE);
+       
+        
+        $dataUser=$dataSave["user"];
+        $user_id = $dataUser["user_id"];
+        unset($dataUser["user_id"]);
         
         $this->db->set('dateupdate', 'NOW()', FALSE); 
-        if ($user_id == "") {      
+        
+        
+        if ($user_id == "") {    
+            $dataUser["user_id"]=$this->uniqID();
+            $dataUser["password"]=$this->encrypt($dataUser["password"]);
             $this->db->set('datecreate', 'NOW()', FALSE);             
-            $return=$this->db->insert('tpl_user', $datafrm);
+            $this->db->insert('tpl_user', $dataUser);
         } else {        
-            $return=$this->db->update('tpl_user', $datafrm, array('user_id' => $user_id));
+            $this->db->update('tpl_user', $dataUser, array('user_id' => $user_id));
         }
-        return $return;
+         
+        $this->db->delete( 'tpl_user_role', array( 'user_id' => $user_id ) );
+        
+        if(!empty($dataSave["role"]))
+        foreach($dataSave["role"] as $role){
+            $this->db->insert('tpl_user_role', array("user_id"=>$user_id,"role_id"=>$role));
+        }
+        
+        $this->db->trans_complete(); 
+       
+        return $this->db->trans_status();
     }
     
     public function delete($selected){
@@ -40,7 +72,7 @@ class M_user extends Main_Model {
     
     
 
-    public function validate($datafrm) {
+    public function validate($datafrm,$isEdit=false) {
         $return = array(
             'status' => true,
             'message' => array()
@@ -52,20 +84,42 @@ class M_user extends Main_Model {
              if (cleanstr($datafrm["username"]) == "") {
                 $return["status"] = false;
                 $return["message"]["username"] = "Username cannot be empty";
-            }else if(!empty ($userExist)){
-                $return["status"] = false;
-                $return["message"]["username"] = "Username is not available";
             }
-            if (cleanstr($datafrm["password"]) == "") {
-                $return["status"] = false;
-                $return["message"]["password"] = "Password cannot be empty";
-            }
+            
+            
+            
+            if(!$isEdit){                
+                if(!empty ($userExist)){
+                    $return["status"] = false;
+                    $return["message"]["username"] = "Username is not available";
+                }
 
+                if ($datafrm["password_1"] == "") {
+                $return["status"] = false;
+                $return["message"]["password_1"] = "Password cannot be empty";
+                }
+                if ($datafrm["password_2"] == "") {
+                    $return["status"] = false;
+                    $return["message"]["password_2"] = "Repeat Password cannot be empty";
+                }
+            }
+           
+            if ($datafrm["password_1"]!=$datafrm["password_2"]) {
+                $return["status"] = false;
+                $return["message"]["password_2"] = "Password And Repeat Password not match";
+            }
            
            
         }
 
         return $return;
+    }
+    
+    function set_error_message($string){
+        $this->error_message=$string;
+    }
+    function get_error_message(){
+        return $this->error_message;
     }
 
 }
