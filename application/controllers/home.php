@@ -16,7 +16,7 @@ class home extends Main_Controller {
 
     public function index() {
        
-        $this->loadview('home', $dataParse);
+        $this->loadview('home');
     }
     
     

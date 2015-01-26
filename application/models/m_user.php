@@ -38,6 +38,9 @@ class M_user extends Main_Model {
         $password=  $this->encrypt($password);
         $dataUser= $this->db->where(array("username"=>$username,"password"=>$password))->get("tpl_user")->row_array();
         if(!empty($dataUser)){
+            
+            unset($dataUser["password"]);
+            
             $dataRole=$this->getRoleUser($dataUser['user_id']);
             $dataReturn["user"]=$dataUser;
             $dataReturn["roles"]=$dataRole;

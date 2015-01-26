@@ -12,9 +12,11 @@ class Main_Controller extends CI_Controller {
 
     function loadContent($content, $dataContent = array()) {
        
+        $sessionUserData=$this->session->userdata('userdata');
         $dataMain['base_url'] = base_url();
         $dataMain['site_url'] = site_url();
-    
+        $dataMain['ses_userdata'] = $sessionUserData["user"];
+        $dataMain['ses_role'] = $sessionUserData["role"];
         
         $this->parser->parse($content, $dataMain);
     }
@@ -27,6 +29,10 @@ class Main_Controller extends CI_Controller {
         $dataMain['maincontent'] = $this->parser->parse($content, $dataContent, TRUE);
         $dataMain['base_url'] = base_url();
         $dataMain['site_url'] = site_url();
+        
+        $sessionUserData=$this->session->userdata('userdata');
+        $dataMain['ses_userdata'] = $sessionUserData["user"];
+        $dataMain['ses_roles'] = $sessionUserData["roles"];
         
         $sideMenu=$this->m_menu->strArrayMenuw2ui($this->m_menu->generateMenu());
         $sideMenu=  substr($sideMenu, 0,  strlen($sideMenu)-1);        

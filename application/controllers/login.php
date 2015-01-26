@@ -8,6 +8,9 @@ class login extends CI_Controller {
        $this->load->helper('gn_frm','gn_str');
     }
 
+    public function logout() {
+        redirect("login");
+    }
     public function index() {
         $message="";
         if(!empty($_POST)){

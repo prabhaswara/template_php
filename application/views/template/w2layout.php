@@ -18,7 +18,12 @@
     <body>
 
         <div id="main_layout" style="position: absolute;top:0;bottom: 0px;right: 0px;left: 0px"></div>
-
+        
+        <div id="top" style="display:none">
+            <div>
+                <span style="position: absolute;bottom: 10px;right: 10px"><?=$ses_userdata["username"] ?>, <a href="{site_url}/login/logout">Logout</a></span>
+            </div>
+        </div>
         <div id="ajaxDiv" class="ajax-hide">
             <img src="{base_url}/images/ajax-loader.gif" class="ajax-loader"/>
         </div>
@@ -32,7 +37,7 @@
                     name: 'main_layout',
                     padding: 4,
                     panels: [
-                        {type: 'top', size: 50, resizable: false, style: topstyle, content: 'top'},
+                        {type: 'top', size: 50, resizable: false, style: topstyle, content: $("#top").html()},
                         {type: 'left', size: 200, resizable: true, style: leftstyle, content: 'left'},
                         {type: 'main', style: centerstyle}
                     ]
