@@ -31,8 +31,10 @@ class User extends Main_Controller {
        $this->loadContent('user/list');     
     }
     
-    public function chooseUserRole() {     
-       $this->loadContent('user/chooseUserRole');     
+    public function jsonUserRole($id) {     
+      $data=$this->m_user->getRoleUser($id);
+      header("Content-Type: application/json;charset=utf-8");
+        echo json_encode($data);
     }
     public function showForm($id=0) {     
         

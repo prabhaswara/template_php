@@ -44,21 +44,5 @@ $(function () {
     
 });
 
-function editUser(recid) {
-    $().w2popup('open', {
-        name    : 'user_form',
-        title   : (recid == 0 ? 'Add User' : 'Edit User'),
-        body    : '<div id="user_form" class="framepopup">please wait..</div>',
-        style   : 'padding: 15px 0px 0px 0px',
-        width   : 500,
-        height  : 300, 
-        onOpen  : function (event) {
-            event.onComplete = function () {
-                
-               $( "#user_form" ).load( "{site_url}/admin/user/showForm/"+recid, function() {});
-            }
-           
-        }
-    });
-}
+
 </script>

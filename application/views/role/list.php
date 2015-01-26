@@ -3,11 +3,7 @@
 
  <script>
 $(function () {
-    // define and render grid
     gridName='listRole';
-//    if (typeof w2ui[gridName] !== 'undefined') {
-//        $().w2destroy(gridName);
-//    }
     $('#listRole').w2grid({
         name    : gridName,
         url     : '{site_url}/admin/role/json_list',

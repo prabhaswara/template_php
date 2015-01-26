@@ -3,11 +3,8 @@
 
  <script>
 $(function () {
-    // define and render grid
     gridName='listLookup';
-//    if (typeof w2ui[gridName] !== 'undefined') {
-//        $().w2destroy(gridName);
-//    }
+
     $('#listLookup').w2grid({
         name    : gridName,
         url     : '{site_url}/admin/lookup/json_list',

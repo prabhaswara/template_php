@@ -34,7 +34,7 @@
                     panels: [
                         {type: 'top', size: 50, resizable: false, style: topstyle, content: 'top'},
                         {type: 'left', size: 200, resizable: true, style: leftstyle, content: 'left'},
-                        {type: 'main', style: centerstyle},
+                        {type: 'main', style: centerstyle}
                     ]
                 });
 
@@ -44,8 +44,7 @@
                     img: null,
                     nodes: {sideMenu},
                     onClick: function(event) {
-                        $(this).gn_loadmain('{site_url}/home/redirect/'+event.target);
-                      
+                        $(this).gn_loadmain('{site_url}/home/redirect/'+event.target);                    
                         
                     }
                 }));
@@ -55,14 +54,7 @@
                 alert( "Error requesting page " + settings.url);
                 });
 
-
-
-
-
             });
-
-      
-
 
         </script>
 

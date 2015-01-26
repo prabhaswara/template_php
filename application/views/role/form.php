@@ -16,7 +16,7 @@
         </tr>
         
     </table>
-    <input type="submit" name="action" id="action" value="Save" />
+    <input type="submit" class="w2ui-btn" name="action" id="action" value="Save" />
 
 </form>
 

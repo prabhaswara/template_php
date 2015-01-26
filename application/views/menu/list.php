@@ -22,7 +22,8 @@ $(function () {
             { field: 'mn_sp_url', caption: 'Url', size: '100%', searchable: true,sortable: true  },
             { field: 'mn_sp_attributes', caption: 'attributes', size: '150px', searchable: true,sortable: true  },
             { field: 'lk_sp_display_text', caption: 'Active/Non', size: '100px', searchable: true,sortable: true  },
-            { field: 'mn_sp_order_num', caption: 'Ordering Num', size: '100px', searchable: true,sortable: true  }
+            { field: 'mn_sp_order_num', caption: 'Ordering Num', size: '100px', searchable: true,sortable: true  },
+            { field: 'rl_sp_name', caption: 'Role', size: '100px', searchable: true,sortable: true  }
             
         ],
         onAdd: function (event) {

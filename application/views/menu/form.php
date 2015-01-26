@@ -38,6 +38,12 @@
                 <?= select_('active_non', $post,$activeNonList,'',false) ?>
             </td>
         </tr>
+        <tr>
+            <td>Role</td>
+            <td>
+                <?= select_('role_id', $post,$roles,'',false) ?>
+            </td>
+        </tr>
     </table>
     <input type="submit" name="action" id="action" value="Save" />
 

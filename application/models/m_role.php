@@ -16,6 +16,15 @@ class M_role extends Main_Model {
         return $this->db->select("role_id,name")->get("tpl_role")->result_array();
     }
     
+    function comboRole(){
+        $data=$this->allrole();
+        $return=array();
+        foreach($data as $row){
+            $return[$row["role_id"]]=$row["name"];
+        }
+        return $return;
+    }
+    
   
 
     public function saveOrUpdate($datafrm) {

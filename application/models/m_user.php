@@ -32,10 +32,26 @@ class M_user extends Main_Model {
     }
     
     
+    function getDataLogin($username,$password){
+        
+        $dataReturn=array();
+        $password=  $this->encrypt($password);
+        $dataUser= $this->db->where(array("username"=>$username,"password"=>$password))->get("tpl_user")->row_array();
+        if(!empty($dataUser)){
+            $dataRole=$this->getRoleUser($dataUser['user_id']);
+            $dataReturn["user"]=$dataUser;
+            $dataReturn["roles"]=$dataRole;
+        }
+        
+        return $dataReturn;    
+        
+        
+    }
+    
+    
     public function saveOrUpdate($dataSave) {
         $this->db->trans_start(TRUE);
-       
-        
+               
         $dataUser=$dataSave["user"];
         $user_id = $dataUser["user_id"];
         unset($dataUser["user_id"]);
@@ -44,11 +60,13 @@ class M_user extends Main_Model {
         
         
         if ($user_id == "") {    
-            $dataUser["user_id"]=$this->uniqID();
+            $user_id=$this->uniqID();
+            $dataUser["user_id"]=$user_id;
             $dataUser["password"]=$this->encrypt($dataUser["password"]);
             $this->db->set('datecreate', 'NOW()', FALSE);             
             $this->db->insert('tpl_user', $dataUser);
         } else {        
+            $dataUser["password"]=$this->encrypt($dataUser["password"]);
             $this->db->update('tpl_user', $dataUser, array('user_id' => $user_id));
         }
          
@@ -66,7 +84,10 @@ class M_user extends Main_Model {
     
     public function delete($selected){
         foreach($selected as $id){
+            $this->db->trans_start(TRUE);
+            $this->db->delete( 'tpl_user_role', array( 'user_id' => $id ) );
             $this->db->delete( 'tpl_user', array( 'user_id' => $id ) );
+            $this->db->trans_complete(); 
         }
     }
     
