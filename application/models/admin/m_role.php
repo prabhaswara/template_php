@@ -27,18 +27,24 @@ class M_role extends Main_Model {
     
   
 
-    public function saveOrUpdate($datafrm) {
+    public function saveOrUpdate($datafrm,$user) {
         $return=false;
         $role_id = $datafrm["role_id"];
-        unset($datafrm["role_id"]);
+      
         
         $this->db->set('dateupdate', 'NOW()', FALSE); 
-        if ($role_id == "") {      
+        
+        $dataChek=$this->get($role_id);
+        
+        if (empty($dataChek)) {      
             $this->db->set('datecreate', 'NOW()', FALSE);             
+            $this->db->set('usercreate',$user);
             $return=$this->db->insert('tpl_role', $datafrm);
         } else {        
+            $this->db->set('userupdate',$user);
             $return=$this->db->update('tpl_role', $datafrm, array('role_id' => $role_id));
         }
+      
         return $return;
     }
     

@@ -4,7 +4,7 @@ class Lookup extends Main_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('m_lookup');
+        $this->load->model('admin/m_lookup');
     }
 
     public function json_list() {
@@ -16,7 +16,7 @@ class Lookup extends Main_Controller {
     public function index() {
        
        
-        $this->loadContent('lookup/list');
+        $this->loadContent('admin/lookup/list');
      
     }
     public function showForm($id=0) {
@@ -28,7 +28,7 @@ class Lookup extends Main_Controller {
        
         if(!empty($postform)){
             $validate=$this->m_lookup->validate($postform);
-            if($validate["status"] && $this->m_lookup->saveOrUpdate($postform)){
+            if($validate["status"] && $this->m_lookup->saveOrUpdate($postform,$this->username)){
                 echo "close_popup";exit;
             }
             $error_message= isset($validate["message"])?$validate["message"]:array();
@@ -47,7 +47,7 @@ class Lookup extends Main_Controller {
             'base_url'=>  base_url(),
             'site_url'=> site_url()
             );
-        $this->parser->parse('lookup/form', $dataParse);
+        $this->parser->parse('admin/lookup/form', $dataParse);
        
     }
     

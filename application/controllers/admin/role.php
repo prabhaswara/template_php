@@ -4,7 +4,7 @@ class Role extends Main_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('m_role');
+        $this->load->model('admin/m_role');
     }
 
     public function json_list() {
@@ -16,7 +16,7 @@ class Role extends Main_Controller {
     public function index() {
        
        
-        $this->loadContent('role/list');
+        $this->loadContent('admin/role/list');
      
     }
     public function showForm($id=0) {
@@ -27,7 +27,7 @@ class Role extends Main_Controller {
        
         if(!empty($postform)){
             $validate=$this->m_role->validate($postform);
-            if($validate["status"] && $this->m_role->saveOrUpdate($postform)){
+            if($validate["status"] && $this->m_role->saveOrUpdate($postform,$this->username)){
                 echo "close_popup";exit;
             }
             $error_message= isset($validate["message"])?$validate["message"]:array();
@@ -46,7 +46,7 @@ class Role extends Main_Controller {
             'base_url'=>  base_url(),
             'site_url'=> site_url()
             );
-        $this->parser->parse('role/form', $dataParse);
+        $this->parser->parse('admin/role/form', $dataParse);
        
     }
     

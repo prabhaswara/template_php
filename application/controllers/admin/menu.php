@@ -4,7 +4,7 @@ class Menu extends Main_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model(array('m_menu','m_lookup','m_role'));
+        $this->load->model(array('admin/m_menu','admin/m_lookup','admin/m_role'));
     }
 
     public function json_list() {
@@ -31,7 +31,7 @@ class Menu extends Main_Controller {
 
     public function index() {      
        
-        $this->loadContent('menu/list');     
+        $this->loadContent('admin/menu/list');     
     }
     public function showForm($id=0) {
         
@@ -39,7 +39,7 @@ class Menu extends Main_Controller {
         $message="";
         if(!empty($postform)){
             $validate=$this->m_menu->validate($postform);
-            if($validate["status"] && $this->m_menu->saveOrUpdate($postform)){
+            if($validate["status"] && $this->m_menu->saveOrUpdate($postform,$this->username)){
                 echo "close_popup";exit;
             }
             $error_message= isset($validate["message"])?$validate["message"]:array();
@@ -67,7 +67,7 @@ class Menu extends Main_Controller {
             'base_url'=>  base_url(),
             'site_url'=> site_url()
             );
-        $this->parser->parse('menu/form', $dataParse);
+        $this->parser->parse('admin/menu/form', $dataParse);
        
     }
     

@@ -52,7 +52,7 @@ class M_user extends Main_Model {
     }
     
     
-    public function saveOrUpdate($dataSave) {
+    public function saveOrUpdate($dataSave,$user) {
         $this->db->trans_start(TRUE);
                
         $dataUser=$dataSave["user"];
@@ -66,10 +66,19 @@ class M_user extends Main_Model {
             $user_id=$this->uniqID();
             $dataUser["user_id"]=$user_id;
             $dataUser["password"]=$this->encrypt($dataUser["password"]);
-            $this->db->set('datecreate', 'NOW()', FALSE);             
+            $this->db->set('datecreate', 'NOW()', FALSE);  
+            $this->db->set('usercreate',$user);
             $this->db->insert('tpl_user', $dataUser);
-        } else {        
-            $dataUser["password"]=$this->encrypt($dataUser["password"]);
+        } else {      
+            
+            
+            if(cleanstr($dataUser["password"])==""){
+                unset($dataUser["password"]);
+            }else{
+              
+                $dataUser["password"]=$this->encrypt($dataUser["password"]);
+            }
+            $this->db->set('userupdate',$user);
             $this->db->update('tpl_user', $dataUser, array('user_id' => $user_id));
         }
          

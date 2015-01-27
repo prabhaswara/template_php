@@ -4,7 +4,7 @@ class home extends Main_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('m_menu');
+        $this->load->model('admin/m_menu');
     }
 
     public function redirect($menu_id) {
@@ -14,8 +14,12 @@ class home extends Main_Controller {
         }
     }
 
+    public function main_home(){
+        $this->loadContent('home');
+    }
     public function index() {
        
+      
         $this->loadview('home');
     }
     

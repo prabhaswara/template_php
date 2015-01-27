@@ -21,16 +21,18 @@ class M_lookup extends Main_Model {
         return $return;
     }
 
-    public function saveOrUpdate($datafrm) {
+    public function saveOrUpdate($datafrm,$user) {
         $return=false;
         $lookup_id = $datafrm["lookup_id"];
         unset($datafrm["lookup_id"]);
         
         $this->db->set('dateupdate', 'NOW()', FALSE); 
         if ($lookup_id == "") {      
-            $this->db->set('datecreate', 'NOW()', FALSE);             
+            $this->db->set('datecreate', 'NOW()', FALSE);     
+            $this->db->set('usercreate',$user);
             $return=$this->db->insert('tpl_lookup', $datafrm);
         } else {        
+            $this->db->set('userupdate',$user);
             $return=$this->db->update('tpl_lookup', $datafrm, array('lookup_id' => $lookup_id));
         }
         return $return;

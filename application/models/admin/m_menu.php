@@ -21,16 +21,18 @@ class M_menu extends Main_Model {
         return $return;
     }
     
-    public function saveOrUpdate($datafrm) {
+    public function saveOrUpdate($datafrm,$user) {
         $return=false;
         $menu_id = $datafrm["menu_id"];
         unset($datafrm["menu_id"]);
         
         $this->db->set('dateupdate', 'NOW()', FALSE); 
         if ($menu_id == "") {      
-            $this->db->set('datecreate', 'NOW()', FALSE);             
+            $this->db->set('datecreate', 'NOW()', FALSE); 
+            $this->db->set('usercreate',$user);
             $return=$this->db->insert('tpl_menu', $datafrm);
         } else {        
+            $this->db->set('userupdate',$user);
             $return=$this->db->update('tpl_menu', $datafrm, array('menu_id' => $menu_id));
         }
         return $return;
@@ -73,17 +75,22 @@ class M_menu extends Main_Model {
             
             $punyaAnak=isset($val['child'])&& !empty($val['child']);
             $punyaImg=strpos($val["attributes"],"img");
+            $url=  cleanstr($val['url']);
             
             if($punyaAnak && !$punyaImg){
                 $val["attributes"].=" , img: 'icon-folder'";
             }
           
-            $string.="{id:'".$val["menu_id"]."', text:'".$val["menu_title"]."' ".$val["attributes"];
+            if($punyaAnak || $url!=""){
+                $string.="{id:'".$val["menu_id"]."', text:'".$val["menu_title"]."' ".$val["attributes"];
+            }
             if($punyaAnak){
                 $string.=", nodes:".$this->strArrayMenuw2ui($val['child']);
                 $string=  substr($string, 0,  strlen($string)-1);
-            }    
-            $string.=" },";
+            } 
+            if($punyaAnak || $url!=""){
+                $string.=" },";
+            }
         }
         $string=  substr($string, 0,  strlen($string)-1);
         $string.="],";
@@ -92,8 +99,18 @@ class M_menu extends Main_Model {
     }
     
     
-    function generateMenu(){
-        $dataMentah=$this->db->where("active_non",'1')->get("tpl_menu")->result_array();
+    function generateMenu($roles){
+         
+        $where="(role_id=null or role_id=''";
+        if(!empty($roles)){
+            $where.="or role_id in('".(implode("','", $roles))."')";
+        }
+        $where.=")";
+        $dataMentah=$this->db->where("active_non",'1')
+                ->where($where, NULL, FALSE)
+                ->get("tpl_menu")->result_array();
+        
+        
         $dataKeyParent=array();
         foreach($dataMentah as $row){
             $dataKeyParent[$row['parent_id']][$row['order_num']]=$row;

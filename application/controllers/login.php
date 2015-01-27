@@ -4,14 +4,20 @@ class login extends CI_Controller {
 
     public function __construct() {
        parent::__construct();
-       $this->load->model('m_user');
+       $this->load->model('admin/m_user');
        $this->load->helper('gn_frm','gn_str');
     }
 
     public function logout() {
+        $this->session->sess_destroy();
         redirect("login");
     }
     public function index() {
+        
+        if($this->session->userdata('userdata')!=null){
+             redirect("home");
+        }
+        
         $message="";
         if(!empty($_POST)){
             $dataRegister=$this->m_user->getDataLogin($_POST["username"],$_POST["password"]);

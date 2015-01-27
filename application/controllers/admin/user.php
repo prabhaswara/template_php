@@ -4,7 +4,7 @@ class User extends Main_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model(array('m_user','m_lookup','m_role'));
+        $this->load->model(array('admin/m_user','admin/m_lookup','admin/m_role'));
     }
     
     
@@ -28,7 +28,7 @@ class User extends Main_Controller {
     }
 
     public function index() {     
-       $this->loadContent('user/list');     
+       $this->loadContent('admin/user/list');     
     }
     
     public function jsonUserRole($id) {     
@@ -67,7 +67,7 @@ class User extends Main_Controller {
                 
                 $dataSave["role"]=$postUserRole;
                
-               $result=$this->m_user->saveOrUpdate($dataSave);
+               $result=$this->m_user->saveOrUpdate($dataSave,$this->username);
                
                if($result){
                    $this->session->set_userdata("message",array("Data Saved","success"));
@@ -98,7 +98,7 @@ class User extends Main_Controller {
             'base_url'=>  base_url(),
             'site_url'=> site_url()
             );
-        $this->parser->parse('user/form', $dataParse);
+        $this->parser->parse('admin/user/form', $dataParse);
        
     }
     
